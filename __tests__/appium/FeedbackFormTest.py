@@ -34,12 +34,11 @@ class AppiumTest(unittest.TestCase):
        command_executor='http://127.0.0.1:4723/wd/hub',
        desired_capabilities={
          'app': os.path.expanduser('~/Desktop/MADFeedBack.app'),
-             'platformName': 'iOS',
+             'platformName': 'iOS Simulator',
              'deviceName': 'iPhone',
              'platformVersion' : '10.3',
-             'udid':'1ed2c80f71cb7615bc48ee8037fc278f0167d725',
              'automationName': 'XCUITest',
-             # 'deviceName': 'iPhone 6s Plus',
+             'deviceName': 'iPhone 6s Plus',
    })
 
   def tearDown(self):

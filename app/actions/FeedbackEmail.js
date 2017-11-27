@@ -7,8 +7,8 @@ export function sendMail(mail, email=[]){
     body = {
       personalizations:[
       {to:[{email:"erika@workwithmad.com"},{email:'manny@workwithmad.com'},
-          {email:"tanglonely@yahoo.com"},{email:'parker@workwithmad.com'}]}] ,
-      from: {email:'kit@workwithmad.com'},
+          {email:"kit@workwithmad.com"},{email:'parker@workwithmad.com'}]}] ,
+      from: {email:'feedbackmad@gmail.com'},
       subject: 'Feedback mail',
       content: [{type:"text/plain",value:`${mail}`}]};
 

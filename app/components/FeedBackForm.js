@@ -284,7 +284,9 @@ class FeedBackForm extends Component <{}> {
 			<CustomeButton accessibilityLabel="send_button" onPress={()=>this.sendEmail()}>
 				<FeedbackBtnLabel>Send</FeedbackBtnLabel>
 			</CustomeButton>
-				<Modal visible={this.state.categoryModalIsOpen} onRequestclose={()=>alert('close')}
+				<Modal
+					onRequestClose={()=>{console.log('close')}}
+					visible={this.state.categoryModalIsOpen}
 					style={{height:'100%', width:'100%', backgroundColor:'red', justifyContent:'center',alignItems:'center'}}
 					animationType="slide"
           transparent>

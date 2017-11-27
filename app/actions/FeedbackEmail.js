@@ -6,9 +6,9 @@ export function sendMail(mail, email=[]){
     let body = {};
     body = {
       personalizations:[
-      {to:[{email:"tangly8888@gmail.com"},{email:'chenli88861@yahoo.com'},
-          {email:"tanglonely@yahoo.com"},{email:'feedbackmad@gmail.com'}]}] ,
-      from: {email:'feedbackmad@gmail.com'},
+      {to:[{email:"erika@workwithmad.com"},{email:'manny@workwithmad.com'},
+          {email:"tanglonely@yahoo.com"},{email:'parker@workwithmad.com'}]}] ,
+      from: {email:'kit@workwithmad.com'},
       subject: 'Feedback mail',
       content: [{type:"text/plain",value:`${mail}`}]};
 

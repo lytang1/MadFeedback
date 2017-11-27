@@ -97,7 +97,6 @@ align-items: center;
 `;
 
 const UserSelection = styled.TouchableOpacity`
-background-color: ${(props) => props.user == 'client' ? 'red' : 'transparent'};
 justify-content: center;
 margin:10px 10px;
 width:150px;
@@ -108,7 +107,6 @@ border-radius:15px;
 
 const User = styled.Text`
 text-align: center;
-color: ${(props)=>props.user =='client'?'#fff':'red'};
 padding: 10px 10px;
 background-color: transparent;
 `;
@@ -120,7 +118,7 @@ align-items: center;
 margin-top: 10px;
 border-radius: 10px;
 height: 30px;
-border-width:1px solid;
+border-width:1px;
 width:200px
 `;
 
@@ -188,7 +186,7 @@ class FeedBackForm extends Component <{}> {
 		setTimeout(() => this.setState({visible:false}),2500);
 	}
 	setToastSuccessfulMessage(message){
-		this.setState({visible:true, backgroundColor:'#4CAF50', message:message});
+		this.setState({visible:true, backgroundColor:'green', message:message});
 	  this.hideToast();
 	}
 
@@ -243,12 +241,12 @@ class FeedBackForm extends Component <{}> {
 				<Required>*</Required>
 			</LabelWrapper>
 			<UserWrapper>
-				<UserSelection accessibilityLabel="Users" onPress={()=>{this.setState({user:'client'})}} user= {this.state.user}>
-					<User user ={this.state.user}>I am a Client</User>
+				<UserSelection accessibilityLabel="Users" onPress={()=>{this.setState({user:'client'})}} user= {this.state.user} style={{backgroundColor: this.state.user == 'client' ? 'red' : 'transparent'}}>
+					<User user ={this.state.user} style={{color: this.state.user =='client'?'#fff':'red'}}>I am a Client</User>
 				</UserSelection>
 
-				<UserSelection accessibilityLabel="Users" onPress={()=>{this.setState({user:'employee'})}} user={this.state.user}>
-					<User user={this.state.user}>I am an Employee</User>
+				<UserSelection accessibilityLabel="Users" onPress={()=>{this.setState({user:'employee'})}} user={this.state.user} style={{backgroundColor: this.state.user == 'employee' ? 'red' : 'transparent'}}>
+					<User user={this.state.user} style={{color:this.state.user == 'employee'?'#fff':'red'}}>I am an Employee</User>
 				</UserSelection>
 			</UserWrapper>
 
@@ -298,9 +296,9 @@ class FeedBackForm extends Component <{}> {
 						{
 							CATEGORIES.map((category, index)=>{
 								return(
-										<TouchableOpacity accessibilityLabel="categories" key={index} onPress={()=>{this.setCategory(category);}} category={this.state.category} style={{}}>
+										<SelectData accessibilityLabel="categories" key={index} onPress={()=>{this.setCategory(category);}} category={this.state.category} style={{}}>
 											<Text style={{ paddingLeft:10, color:this.state.category ==category? 'red':'#000', textAlign:'center'}}>{category}</Text>
-										</TouchableOpacity>
+										</SelectData>
 									)
 							})
 						}

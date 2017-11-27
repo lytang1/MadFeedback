@@ -30,7 +30,9 @@ class FeedBackContainer extends Component <{}> {
 	}
 
 	componentDidMount() {
-	  setTimeout(() => SplashScreen.hide(),2500);
+		if(Platform.OS != 'android'){
+		  setTimeout(() => SplashScreen.hide(),2500);
+		}
 	}
 	
 	sendEmail(obj){

@@ -58,41 +58,28 @@ class EmailLoginTests(AppiumTest):
     self.assertEqual(5, len(category_selections))
     category_selections[0].click()
     time.sleep(2)
-    source = self.driver.page_source
-    print source
     # rating_stars = self.driver.find_elements_by_accessibility_id('rating')
     # rating_stars[4].click()
     send_button = self.driver.find_element_by_accessibility_id('send_button')
     send_button.click()
-    time.sleep(1)
-    error = self.driver.find_element_by_accessibility_id('toast')
-    self.assertIsNotNone(error)
+    time.sleep(2)
     source = self.driver.page_source
-    self.assertNotEqual(-1, source.find("'Please tell us who you are '"))
+    self.assertNotEqual(-1, source.find('"Please tell us who you are "'))
 
   def test_submit_feedback_without_select_category(self):
     time.sleep(5)
     users = self.driver.find_elements_by_accessibility_id('Users')
     self.assertIsNotNone(users)
     users[0].click()
-    category_button = self.driver.find_element_by_accessibility_id('category_selectbox')
-    category_button.click()
     time.sleep(2)
-    # category_selections = self.driver.find_elements_by_accessibility_id('categories')
-    # self.assertEqual(5, len(category_selections))
-    # category_selections[0].click()
-    time.sleep(2)
-    source = self.driver.page_source
-    print source
     # rating_stars = self.driver.find_elements_by_accessibility_id('rating')
     # rating_stars[4].click()
     send_button = self.driver.find_element_by_accessibility_id('send_button')
     send_button.click()
     time.sleep(1)
-    error = self.driver.find_element_by_accessibility_id('toast')
-    self.assertIsNotNone(error)
     source = self.driver.page_source
-    self.assertNotEqual(-1, source.find("'Please select a category before submitting the form'"))
+    print source
+    self.assertNotEqual(-1, source.find('"Please select a category before submitting the form"'))
 
   def test_submit_feedback_without_rating(self):
     time.sleep(5)
@@ -111,10 +98,8 @@ class EmailLoginTests(AppiumTest):
     send_button = self.driver.find_element_by_accessibility_id('send_button')
     send_button.click()
     time.sleep(1)
-    error = self.driver.find_element_by_accessibility_id('toast')
-    self.assertIsNotNone(error)
     source = self.driver.page_source
-    self.assertNotEqual(-1, source.find("'Please rate us before submitting the form'"))
+    self.assertNotEqual(-1, source.find('"Please rate us before submitting the form"'))
 
 
   # def test_submit_feedback_form_correctly_without(self):

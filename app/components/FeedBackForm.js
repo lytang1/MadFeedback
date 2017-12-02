@@ -1,160 +1,12 @@
 import React, { Component } from 'react';
-import {
-	View,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	Modal,
-	StatusBar
-} from 'react-native';
-import styled from 'styled-components/native';
+import { StatusBar, ActivityIndicator } from 'react-native';
 import StarRating from 'react-native-star-rating';
-import SplashScreen from 'react-native-splash-screen';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import Toast from 'react-native-root-toast';
-
-const CustomeButton = styled.TouchableOpacity`
-	border:1px solid;
-	margin-top:10;
-	width: 100%;
-	height:40px;
-	border-radius: 15px;
-	justify-content:center;
-	border-color:red;
-`;
-
-const FeedbackBtnLabel = styled.Text`
-	background-color:transparent;
-	text-align:center;
-	justify-content:center;
-	font-size:20px;
-	color:red;
-`
-
-const FeedBack = styled.TextInput`
-	width: 100%;
-	height:100px;
-	border: 1px solid;
-	border-radius: 15;
-	padding-left:10;
-	margin-top:10px;
-	margin-bottom:10px;
-`;
-
-const RatingLabel = styled.Text`
- text-align:left;
-`;
-
-const ViewContainer = styled.View`
-	flex: 1;
-	padding: 15px 15px;
-`;
-
-const Title = styled.Text`
-	font-size:20px;
-`;
-
-const ModalWrapper = styled.View`
-	background-color:rgba(238,238,238, 0.7);
-	flex-direction: column;
-  justify-content: center;
-  align-items: center; 
-  height:100%;
-`;
-const HeaderTitle = styled.View`
-	 height:55;
-	 width:100%;
-	 background-color:red;
-	 align-items:center;
-	 justify-content:center;
-	 padding-top:20;
-	 padding-bottom:10;
-`;
-const Container = styled.View`
-	width:100%;
-	flex:1;
-`;
-
-const LabelWrapper = styled.View`
-	flex-direction:row;
-`;
-
-const Required = styled.Text`
-	color: red;
-`;
-
-const HeaderText = styled.Text`
-color: #fff;
-font-size: 25px;
-text-align: center;
-font-weight: bold;
-`;
-
-const UserWrapper = styled.View`
-flex-direction: column;
-justify-content: center;
-align-items: center;
-`;
-
-const UserSelection = styled.TouchableOpacity`
-justify-content: center;
-margin:10px 10px;
-width:150px;
-height:30px;
-border: 1px solid red;
-border-radius:15px;
-`
-
-const User = styled.Text`
-text-align: center;
-padding: 10px 10px;
-background-color: transparent;
-`;
-
-const CategoryWrapper = styled.TouchableOpacity`
-flex-direction: row;
-justify-content: center;
-align-items: center;
-margin-top: 10px;
-border-radius: 10px;
-height: 30px;
-border-width:1px;
-width:200px
-`;
-
-const SelectBox = styled.Text`
-text-align: center;
-color: red;
-padding: 5px 5px;
-background-color: transparent
-`;
-
-const RatingWrapper = styled.View`
-justify-content: center;
-align-items: center;
-`;
-
-const SelectBoxView = styled.View`
-position: absolute;
-top: 150px;
-left: 20px;
-right: 20px;
-height: 300px;
-background-color: #F5F5F5;
-flex-direction:column;
-border-radius: 10px;
-`;
-
-const SelectData = styled.TouchableOpacity`
-flex:1;
-background-color: white;
-height: 50px;
-justify-content: center;
-border-radius:15px;
-margin: 5px 5px;
-`;
-
-const CATEGORIES = ['Quality','Speed','Value','Creativity','Strategy'];
+import Notification from './customComponents/Notification';
+import SelectionBox from './customComponents/SelectionModal';
+import Label from './customComponents/Label';
+import {USERS, CATEGORIES} from '../constant/constants';
+import { CustomButton, FeedbackBtnLabel,FeedBack, ViewContainer,Title,HeaderTitle,
+Container, HeaderWrapper, UserWrapper,UserSelection,User,RatingWrapper} from '../assets/StyledComponents';
 
 class FeedBackForm extends Component <{}> {
 	
@@ -168,16 +20,16 @@ class FeedBackForm extends Component <{}> {
 	   	category:null,
 	   	user:null,
 	   	backgroundColor:null,
-	   	message:null
+	   	message:null,
 	   }
 	}
 
 	componentWillReceiveProps(nextProps) {
 	  if(this.props != nextProps){
 	  	if(nextProps.errorMessage){
-	  		this.setToastErrorMessage(nextProps.errorMessage)
+	  		this.setToastMessage(nextProps.errorMessage,'red')
 	  	}else if(nextProps.successMessage && nextProps.isSuccess){
-	  		this.setToastSuccessfulMessage(nextProps.successMessage)
+	  		this.setToastMessage(nextProps.successMessage, 'green')
 	  	}
 	  }
 	}
@@ -185,30 +37,19 @@ class FeedBackForm extends Component <{}> {
 	hideToast(){
 		setTimeout(() => this.setState({visible:false}),2500);
 	}
-	setToastSuccessfulMessage(message){
-		this.setState({visible:true, backgroundColor:'green', message:message});
+	setToastMessage(message, bgcolor){
+		this.setState({visible:true, backgroundColor:bgcolor, message:message});
 	  this.hideToast();
-	}
-
-	setToastErrorMessage(message){
-		this.setState({visible:true, message:message, backgroundColor:'red'});
-		this.hideToast();
 	}
 
 	setRating(value){
 		this.setState({rating:value});
 	}
 
-	openSelectbox(){
-		this.setState({categoryModalIsOpen:true})
-	}
-
 	setCategory(value){
-		this.setState({category:value, categoryModalIsOpen:false})
+		this.setState({category:value})
 	}
-	setUser(value){
-		this.setState({user:value})
-	}
+	
 	sendEmail(){
 		const {user, rating, category, feedback} = this.state;
 		let errorMessage = null;
@@ -220,51 +61,30 @@ class FeedBackForm extends Component <{}> {
 		return(
 		<Container>
 			<StatusBar barStyle="light-content"/>
-			<HeaderTitle >
-				<HeaderText accessibilityLabel ='title'>Mäd</HeaderText>
-			</HeaderTitle>
+			<HeaderWrapper >
+				<HeaderTitle accessibilityLabel ='title'>Mäd</HeaderTitle>
+			</HeaderWrapper>
 		<ViewContainer>
-			<Toast
-				accessibilityLabel="toast"
-        visible={this.state.visible}
-        position={60}
-        shadow={false}
-        animation={false}
-        hideOnPress={true}
-        backgroundColor={this.state.backgroundColor}
-        textColor='#fff'>
-         {this.state.message}
-       </Toast>
 			<Title>{'Feedback Form'.toUpperCase()}</Title>
-			<LabelWrapper style={{marginTop:10}}>
-				<Text>Who are you? </Text>
-				<Required>*</Required>
-			</LabelWrapper>
+			<Label labelTitle="Who are you?" required={true} />
+			<Notification bgcolor={this.state.backgroundColor} message={this.state.message} visible={this.state.visible} />
 			<UserWrapper>
-				<UserSelection accessibilityLabel="Users" onPress={()=>{this.setState({user:'client'})}} user= {this.state.user} style={{backgroundColor: this.state.user == 'client' ? 'red' : 'transparent'}}>
-					<User user ={this.state.user} style={{color: this.state.user =='client'?'#fff':'red'}}>I am a Client</User>
-				</UserSelection>
-
-				<UserSelection accessibilityLabel="Users" onPress={()=>{this.setState({user:'employee'})}} user={this.state.user} style={{backgroundColor: this.state.user == 'employee' ? 'red' : 'transparent'}}>
-					<User user={this.state.user} style={{color:this.state.user == 'employee'?'#fff':'red'}}>I am an Employee</User>
-				</UserSelection>
+				{
+					USERS.map((user,index)=>(
+						<UserSelection key={index} accessibilityLabel="Users" onPress={()=>{this.setState({user:user.value})}} 
+							style={{backgroundColor: this.state.user == user.value ? 'red' : 'transparent'}}>
+							<User style={{color: this.state.user ==user.value?'#fff':'red'}}>{user.label}</User>
+						</UserSelection>
+					))
+				}
 			</UserWrapper>
 
-			<LabelWrapper style={{flexDirection:'row'}}>
-				<Text>Category Selection </Text>
-				<Required>*</Required>
-			</LabelWrapper>
+			<Label labelTitle="Category Selection" required={true} />
+			<SelectionBox data={CATEGORIES} selectedCategory={this.state.category} 
+				setCategory={(data)=>this.setCategory(data)}
+			/>
 
-			<View style={{alignItems:'center'}}>
-				<CategoryWrapper accessibilityLabel="category_selectbox" onPress={()=>{this.openSelectbox();}}>
-					<SelectBox>{this.state.category}</SelectBox>
-					<IonIcon name="md-arrow-dropdown" size={20}  style={{position:'absolute',right:10}}/>
-				</CategoryWrapper>
-			</View>
-			<LabelWrapper style={{marginTop:10}}>
-				<RatingLabel>Rate </RatingLabel>
-				<Required>*</Required>
-			</LabelWrapper>
+			<Label labelTitle="Rating" required={true} />
 			<RatingWrapper>
 				<StarRating
 					accessibilityLabel="rating"
@@ -275,38 +95,15 @@ class FeedBackForm extends Component <{}> {
 	        rating={this.state.rating}
 	        selectedStar={(rating) => this.setRating(rating)}
 	        starColor={'red'}
-	      />
+     		 />
       </RatingWrapper>
-			<LabelWrapper style={{marginTop:10}}>
-				<Text style={{fontSize:20, textAlign:'left'}}>Opinion </Text>
-			</LabelWrapper>
-			<FeedBack accessibilityLabel="feedback" placeholder='Feedback' multiline={true} onChangeText={(text)=>this.setState({feedback:text})}/>
-			<CustomeButton accessibilityLabel="send_button" onPress={()=>this.sendEmail()}>
+      <Label labelTitle="Opinion" />
+			<FeedBack accessibilityLabel="feedback" placeholder='Feedback' multiline={true}
+				onChangeText={(text)=>this.setState({feedback:text})}/>
+			
+			<CustomButton accessibilityLabel="send_button" onPress={()=>this.sendEmail()}>
 				<FeedbackBtnLabel>Send</FeedbackBtnLabel>
-			</CustomeButton>
-				<Modal
-					onRequestClose={()=>{console.log('close')}}
-					visible={this.state.categoryModalIsOpen}
-					style={{height:'100%', width:'100%', backgroundColor:'red', justifyContent:'center',alignItems:'center'}}
-					animationType="slide"
-          transparent>
-				 <ModalWrapper>
-          <CustomeButton accessibilityLabel="cancel_selectbox" onPress={()=>this.setState({categoryModalIsOpen:false})} style={{position:'absolute', bottom:10,left:20, right:20, width:'90%', backgroundColor:'#fff'}}>
-          		<FeedbackBtnLabel>Cancel</FeedbackBtnLabel>
-          </CustomeButton>
-					<SelectBoxView>
-						{
-							CATEGORIES.map((category, index)=>{
-								return(
-										<SelectData accessibilityLabel="categories" key={index} onPress={()=>{this.setCategory(category);}} category={this.state.category} style={{}}>
-											<Text style={{ paddingLeft:10, color:this.state.category ==category? 'red':'#000', textAlign:'center'}}>{category}</Text>
-										</SelectData>
-									)
-							})
-						}
-					</SelectBoxView>
-					</ModalWrapper>
-				</Modal>
+			</CustomButton>
 		</ViewContainer>
 		</Container>
 	)}

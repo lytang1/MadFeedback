@@ -31,11 +31,11 @@ class AppiumTest(unittest.TestCase):
           })
     else:
       self.driver = webdriver.Remote(
-       command_executor='http://127.0.0.1:4723/wd/hub',
-       desired_capabilities={
-         'app': os.path.expanduser('~/Desktop/MADFeedBack.app'),
-             'platformName': 'iOS Simulator',
-             'deviceName': 'iPhone',
+        command_executor='http://127.0.0.1:4723/wd/hub',
+        desired_capabilities={
+          'app': os.path.expanduser('~/Desktop/MADFeedBack.app'),
+             'platformName': 'iOS',
+             'deviceName': 'iPhone Simulator',
              'platformVersion' : '10.3',
              'automationName': 'XCUITest',
              'deviceName': 'iPhone 6s Plus',

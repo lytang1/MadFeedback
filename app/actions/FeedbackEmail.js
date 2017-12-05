@@ -17,7 +17,7 @@ export function sendMail(mail, email=[]){
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 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',
+        'Authorization': 'Bearer '+ {YOUR_API_KEY},// go to link https://app.sendgrid.com/ and register a free account
       },
       body: JSON.stringify(body)
     }

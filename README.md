@@ -74,7 +74,9 @@ To test run command below
 ```
   appium-doctor
 ```
-Register an account to get API key to configure send email
+Register an account to get API key to configure send email 
+
+here is the link (https://app.sendgrid.com)
 
 useful links for mobile testing Get started with appium python
 

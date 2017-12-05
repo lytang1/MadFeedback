@@ -74,6 +74,8 @@ To test run command below
 ```
   appium-doctor
 ```
+Register an account to get API key to configure send email
+
 useful links for mobile testing Get started with appium python
 
 #### [Sample Test with appium python](https://github.com/appium/sample-code/tree/master/sample-code/examples/python)

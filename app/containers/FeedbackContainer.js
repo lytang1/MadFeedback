@@ -27,26 +27,26 @@ class FeedBackContainer extends Component <{}> {
 	}
 	
 	sendEmail(data){
-		const {user, rating, category, feedback} = data;
-		let message = null;
+		// const {user, rating, category, feedback} = data;
+		// let message = null;
 		
-		if(user == null || user==''){
-			message="Please tell us who you are "
-		}else if(category == null || category==''){
-			message = "Please select a category before submitting the form"
-		}else if( rating ==0){
-			message="Please rate us before submitting the form"
-		}
-		if(message == null ){
-			let mail = `This is an feedback email from ${user}. \nHe/She rates ${rating} 
-						${rating>1?'stars':'star'} for ${category} of Mäd.\n${feedback?'Here is their feedback':''}
-						${feedback!=null && feedback!= ''? feedback:"\n"}`;
-			this.props.sendMail(mail)
-			message = "Your feedback have been submitted successfully."
-			this.setState({successMessage:message, errorMessage:null})
-		}else{
-			this.setState({errorMessage:message, successMessage:null})
-		}
+		// if(user == null || user==''){
+		// 	message="Please tell us who you are "
+		// }else if(category == null || category==''){
+		// 	message = "Please select a category before submitting the form"
+		// }else if( rating ==0){
+		// 	message="Please rate us before submitting the form"
+		// }
+		// if(message == null ){
+		// 	let mail = `This is an feedback email from ${user}. \nHe/She rates ${rating} 
+		// 				${rating>1?'stars':'star'} for ${category} of Mäd.\n${feedback?'Here is their feedback':''}
+		// 				${feedback!=null && feedback!= ''? feedback:"\n"}`;
+		// 	this.props.sendMail(mail)
+		// 	message = "Your feedback have been submitted successfully."
+		// 	this.setState({successMessage:message, errorMessage:null})
+		// }else{
+		// 	this.setState({errorMessage:message, successMessage:null})
+		// }
 	}
 	render(){
 		const { rating } = this.state;
